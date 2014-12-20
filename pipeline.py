@@ -57,7 +57,7 @@ if not WGET_LUA:
 #
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
-VERSION = "20141219.01"
+VERSION = "20141220.01"
 USER_AGENT = 'ArchiveTeam'
 TRACKER_ID = 'roon'
 TRACKER_HOST = 'tracker.archiveteam.org'
@@ -191,7 +191,7 @@ class WgetArgs(object):
         ]
 
         wget_args.append(
-            "https://roon.io/api/v1/blogs/{}".format(item['item_name'])
+            "https://roon.io/api/v1/blogs/{0}".format(item['item_name'])
         )
 
         if 'bind_address' in globals():

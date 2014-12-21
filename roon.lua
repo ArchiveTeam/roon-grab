@@ -61,7 +61,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
   previous_status_code = status_code
   
   -- Handle case where spammers create links that are malformed
-  if status_code == 400 and string.match(url["url"], "%.roon%.io") then
+  if (status_code == 400 or status_code == 414) and string.match(url["url"], "%.roon%.io") then
     return wget.actions.FINISH
   end
 

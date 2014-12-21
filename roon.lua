@@ -16,6 +16,13 @@ read_file = function(file)
 end
 
 
+wget.callbacks.lookup_host = function(host)
+  -- DNS resolve may fail if a label starts or ends with a hyphen
+  if string.match(host, "%-.*%.roon%.io") or string.match(host, "%-%.roon%.io") then
+    return "107.22.208.70"
+  end
+end
+
 wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_parsed, iri, verdict, reason)
   local url = urlpos["url"]["url"]
 
@@ -29,6 +36,13 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     else
       return false
     end
+  elseif verdict and string.match(url, "gravatar%.com") then
+    -- Grab only the avatars and not their blog
+    if string.match(url, "/avatar/") then
+      return true
+     else
+      return false
+     end
   end
 
   return verdict

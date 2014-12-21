@@ -17,8 +17,10 @@ end
 
 
 wget.callbacks.lookup_host = function(host)
-  -- DNS resolve may fail if a label starts or ends with a hyphen
-  if string.match(host, "%-.*%.roon%.io") or string.match(host, "%-%.roon%.io") then
+  -- DNS resolve may fail if a label starts or ends with a hyphen or too long
+  if string.match(host, "%-.*%.roon%.io") or string.match(host, "%-%.roon%.io") or (
+    string.match(host, "%.roon%.io") and host:len() > 30
+  ) then
     return "107.22.208.70"
   end
 end
